@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.stereotype.Component;
 
@@ -36,17 +37,11 @@ public class JwtTokenUtil {
         return Optional.empty();
     }
 
-    public boolean validateToken(String token) {
-        try {
-            Algorithm algorithm = Algorithm.RSA256(publicKey, privateKey);
-            JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer("auth0")
-                    .build();
-            DecodedJWT jwt = verifier.verify(token);
-            return true;
-        } catch (JWTVerificationException exception){
-
-        }
-       return false;
+    public void validateToken(String token) throws TokenExpiredException {
+        Algorithm algorithm = Algorithm.RSA256(publicKey, privateKey);
+        JWTVerifier verifier = JWT.require(algorithm)
+                .withIssuer("auth0")
+                .build();
+        verifier.verify(token);
     }
 }
