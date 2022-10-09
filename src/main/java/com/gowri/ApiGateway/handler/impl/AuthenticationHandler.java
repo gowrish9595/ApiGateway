@@ -1,5 +1,7 @@
 package com.gowri.ApiGateway.handler.impl;
 
+import com.gowri.ApiGateway.ApiGatewayError;
+import com.gowri.ApiGateway.ApiGatewayExceptionFactory;
 import com.gowri.ApiGateway.domain.IncomingRequest;
 import com.gowri.ApiGateway.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,7 @@ public class AuthenticationHandler extends BaseHandler {
                 throw new InvalidParameterException();
             }
         } else {
-            throw new InvalidParameterException();
+            throw ApiGatewayExceptionFactory.AUTHENTICATION_TOKEN_NOT_FOUND;
         }
         if(nextHandler != null) {
            return nextHandler.handle(request);
