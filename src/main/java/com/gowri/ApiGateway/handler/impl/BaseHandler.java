@@ -6,4 +6,8 @@ import org.springframework.http.ResponseEntity;
 
 abstract class BaseHandler implements Handler {
     Handler nextHandler;
+    @Override
+    public void setHandler(Handler handler) {
+      this.nextHandler = handler;
+    }
 }

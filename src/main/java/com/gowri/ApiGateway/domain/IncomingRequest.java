@@ -10,4 +10,5 @@ public class IncomingRequest {
     private HttpMethod httpMethod;
     private HttpHeaders httpHeaders;
     private String body;
+    private String queryString;
 }

@@ -1,7 +1,6 @@
 package com.gowri.ApiGateway.handler.impl;
 
 import com.gowri.ApiGateway.domain.IncomingRequest;
-import com.gowri.ApiGateway.handler.Handler;
 import com.gowri.ApiGateway.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -9,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.security.InvalidParameterException;
-import java.util.List;
+
 @Component
 public class AuthenticationHandler extends BaseHandler {
 
@@ -17,7 +16,7 @@ public class AuthenticationHandler extends BaseHandler {
     JwtTokenUtil jwtTokenUtil;
 
     @Override
-    public void handle(IncomingRequest request) {
+    public ResponseEntity<Object> handle(IncomingRequest request) {
         if(request.getHttpHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
             String token = request.getHttpHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
             boolean b = jwtTokenUtil.validateToken(token);
@@ -28,12 +27,8 @@ public class AuthenticationHandler extends BaseHandler {
             throw new InvalidParameterException();
         }
         if(nextHandler != null) {
-            nextHandler.handle(request);
+           return nextHandler.handle(request);
         }
-      }
-
-    @Override
-    public void setHandler() {
-
+        return null;
     }
 }

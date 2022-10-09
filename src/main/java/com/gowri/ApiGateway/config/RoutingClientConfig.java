@@ -11,7 +11,6 @@ public class RoutingClientConfig {
     @Bean
     public RestTemplate client() {
         RestTemplate restTemplate = new RestTemplateBuilder()
-                .rootUri("http://localhost:8085")
                 .build();
         return  restTemplate;
     }

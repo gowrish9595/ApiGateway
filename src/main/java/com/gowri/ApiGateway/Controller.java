@@ -2,6 +2,7 @@ package com.gowri.ApiGateway;
 
 import com.gowri.ApiGateway.domain.IncomingRequest;
 import com.gowri.ApiGateway.handler.impl.AuthenticationHandler;
+import com.gowri.ApiGateway.handler.impl.RoutingHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -26,6 +27,9 @@ public class Controller {
     @Autowired
     AuthenticationHandler authenticationHandler;
 
+    @Autowired
+    RoutingHandlerImpl routingHandler;
+
     @RequestMapping("/v1/**")
     public ResponseEntity<Object> get(HttpServletRequest request, HttpServletResponse resp) throws IOException {
         String method = request.getMethod();
@@ -43,8 +47,10 @@ public class Controller {
                         (oldValue, newValue) -> newValue,
                         HttpHeaders::new
                 ));
+        request1.setQueryString(request.getQueryString());
         request1.setHttpHeaders(httpHeaders);
         authenticationHandler.handle(request1);
-        return routingGatewayClient.send(request1);
+        authenticationHandler.setHandler(routingHandler);
+        return authenticationHandler.handle(request1);
     }
 }
