@@ -1,0 +1,18 @@
+server:
+  ssl:
+    enabled: false
+    key-store: classpath:apigateway.p12
+    key-password: changeit
+
+security:
+  key:
+    path:
+      public: /home/gowrishankar/.ssh/publickey.crt
+      private: /home/gowrishankar/.ssh/pkcs8.key
+
+routing:
+  client:
+    connection:
+      timeoutInSeconds: 20
+    read:
+      timeoutInSeconds: 50

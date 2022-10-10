@@ -1,4 +1,4 @@
-package com.gowri.ApiGateway;
+package com.gowri.ApiGateway.client;
 
 import com.gowri.ApiGateway.domain.IncomingRequest;
 import org.springframework.http.ResponseEntity;

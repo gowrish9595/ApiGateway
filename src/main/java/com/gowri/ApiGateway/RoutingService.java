@@ -1,5 +1,6 @@
 package com.gowri.ApiGateway;
 
+import com.gowri.ApiGateway.client.RoutingGatewayClient;
 import com.gowri.ApiGateway.config.RoutingConfigs;
 import com.gowri.ApiGateway.domain.IncomingRequest;
 import org.springframework.beans.factory.annotation.Autowired;

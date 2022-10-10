@@ -1,4 +1,4 @@
-package com.gowri.ApiGateway;
+package com.gowri.ApiGateway.client;
 
 import com.gowri.ApiGateway.domain.IncomingRequest;
 import org.springframework.http.RequestEntity;
@@ -8,7 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class RoutingGatewayClientImpl implements  RoutingGatewayClient{
+public class RoutingGatewayClientImpl implements RoutingGatewayClient {
 
     private final RestTemplate client;
 
@@ -19,16 +19,15 @@ public class RoutingGatewayClientImpl implements  RoutingGatewayClient{
     @Override
     public ResponseEntity<Object> send(String baseUrl, IncomingRequest incomingRequest) {
         String url = baseUrl + incomingRequest.getUrl();
-        if(StringUtils.hasText(incomingRequest.getQueryString())) {
+
+        if (StringUtils.hasText(incomingRequest.getQueryString())) {
             url = url + "?" + incomingRequest.getQueryString();
         }
+
         RequestEntity<Object> body = RequestEntity
                 .method(incomingRequest.getHttpMethod(), url)
                 .headers(incomingRequest.getHttpHeaders())
                 .body(incomingRequest.getBody());
-        ResponseEntity<Object> response = client
-                .exchange(body, Object.class);
-        return response;
-
+        return client.exchange(body, Object.class);
     }
 }
