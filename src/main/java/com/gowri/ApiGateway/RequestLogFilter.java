@@ -17,8 +17,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         logger.info("Inside Once Per Request Filter originated by request {}");
-        if ("POST".equalsIgnoreCase(request.getMethod()))
-        {
+        if ("POST".equalsIgnoreCase(request.getMethod())) {
             String collect = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         }
         filterChain.doFilter(request, response);

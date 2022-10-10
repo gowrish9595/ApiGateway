@@ -1,9 +1,10 @@
 package com.gowri.ApiGateway.handler;
 
-import com.gowri.ApiGateway.domain.IncomingRequest;
-import org.springframework.http.ResponseEntity;
+import com.gowri.ApiGateway.CommonResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 public interface Handler {
-    ResponseEntity<Object> handle(IncomingRequest request);
+    void handle(HttpServletRequest request, CommonResponse commonResponse);
     void setHandler(Handler handler);
 }

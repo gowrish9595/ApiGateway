@@ -4,7 +4,7 @@ import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.MissingClaimException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.gowri.ApiGateway.ApiGatewayExceptionFactory;
-import com.gowri.ApiGateway.domain.IncomingRequest;
+import com.gowri.ApiGateway.CommonResponse;
 import com.gowri.ApiGateway.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +12,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.stream.Stream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 
 @Component
 @Slf4j
@@ -23,12 +24,10 @@ public class AuthenticationHandler extends BaseHandler {
     JwtTokenUtil jwtTokenUtil;
 
     @Override
-    public ResponseEntity<Object> handle(IncomingRequest request) {
-        if (request.getHttpHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
-            String token = Stream.ofNullable(request.getHttpHeaders().get(HttpHeaders.AUTHORIZATION))
-                    .flatMap(Collection::stream)
-                    .findAny()
-                    .orElseThrow(() -> ApiGatewayExceptionFactory.AUTHENTICATION_TOKEN_NOT_FOUND);
+    public void handle(HttpServletRequest request, CommonResponse response) {
+        Enumeration<String> authorizationHeaders = request.getHeaders(HttpHeaders.AUTHORIZATION);
+        if (authorizationHeaders != null && authorizationHeaders.hasMoreElements() ) {
+            String token = authorizationHeaders.nextElement();
             try {
                 jwtTokenUtil.validateToken(token);
             } catch (TokenExpiredException tokenExpiredException) {
@@ -42,9 +41,6 @@ public class AuthenticationHandler extends BaseHandler {
         } else {
             throw ApiGatewayExceptionFactory.AUTHENTICATION_TOKEN_NOT_FOUND;
         }
-        if (nextHandler != null) {
-            return nextHandler.handle(request);
-        }
-        return null;
+        handleNext(request, response);
     }
 }

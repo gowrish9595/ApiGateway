@@ -24,6 +24,7 @@ public class RoutingGatewayClientImpl implements  RoutingGatewayClient{
         }
         RequestEntity<Object> body = RequestEntity
                 .method(incomingRequest.getHttpMethod(), url)
+                .headers(incomingRequest.getHttpHeaders())
                 .body(incomingRequest.getBody());
         ResponseEntity<Object> response = client
                 .exchange(body, Object.class);
