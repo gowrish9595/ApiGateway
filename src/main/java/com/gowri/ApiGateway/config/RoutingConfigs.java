@@ -1,7 +1,7 @@
 package com.gowri.ApiGateway.config;
 
-import com.gowri.ApiGateway.RoutingRules;
-import com.gowri.ApiGateway.YamlPropertySourceFactory;
+import com.gowri.ApiGateway.domain.RoutingRules;
+import com.gowri.ApiGateway.util.YamlPropertySourceFactory;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,6 +1,7 @@
-package com.gowri.ApiGateway;
+package com.gowri.ApiGateway.exception;
 
-import org.springframework.http.HttpStatus;
+import com.gowri.ApiGateway.exception.ApiGatewayError;
+import com.gowri.ApiGateway.exception.ApiGatewayException;
 
 public class ApiGatewayExceptionFactory {
     public static ApiGatewayException genericError(String errorMessage) {

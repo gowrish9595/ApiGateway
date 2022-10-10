@@ -1,6 +1,7 @@
-package com.gowri.ApiGateway;
+package com.gowri.ApiGateway.controller;
 
 import com.gowri.ApiGateway.client.RoutingGatewayClient;
+import com.gowri.ApiGateway.domain.CommonResponse;
 import com.gowri.ApiGateway.handler.impl.AuthenticationHandler;
 import com.gowri.ApiGateway.handler.impl.RoutingHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;

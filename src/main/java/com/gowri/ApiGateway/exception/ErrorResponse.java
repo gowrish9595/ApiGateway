@@ -1,4 +1,4 @@
-package com.gowri.ApiGateway;
+package com.gowri.ApiGateway.exception;
 
 import lombok.Builder;
 import lombok.Getter;

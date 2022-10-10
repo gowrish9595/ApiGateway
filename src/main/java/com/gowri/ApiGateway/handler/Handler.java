@@ -1,6 +1,6 @@
 package com.gowri.ApiGateway.handler;
 
-import com.gowri.ApiGateway.CommonResponse;
+import com.gowri.ApiGateway.domain.CommonResponse;
 
 import javax.servlet.http.HttpServletRequest;
 

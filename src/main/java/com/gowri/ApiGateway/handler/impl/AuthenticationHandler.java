@@ -3,25 +3,24 @@ package com.gowri.ApiGateway.handler.impl;
 import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.MissingClaimException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.gowri.ApiGateway.ApiGatewayExceptionFactory;
-import com.gowri.ApiGateway.CommonResponse;
+import com.gowri.ApiGateway.exception.ApiGatewayExceptionFactory;
+import com.gowri.ApiGateway.domain.CommonResponse;
 import com.gowri.ApiGateway.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 
 @Component
 @Slf4j
 public class AuthenticationHandler extends BaseHandler {
-
-    @Autowired
     JwtTokenUtil jwtTokenUtil;
+
+    public AuthenticationHandler(JwtTokenUtil jwtTokenUtil) {
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
 
     @Override
     public void handle(HttpServletRequest request, CommonResponse response) {

@@ -1,4 +1,4 @@
-package com.gowri.ApiGateway;
+package com.gowri.ApiGateway.service;
 
 import com.gowri.ApiGateway.client.RoutingGatewayClient;
 import com.gowri.ApiGateway.config.RoutingConfigs;

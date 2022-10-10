@@ -1,4 +1,4 @@
-package com.gowri.ApiGateway;
+package com.gowri.ApiGateway.domain;
 
 import lombok.Data;
 

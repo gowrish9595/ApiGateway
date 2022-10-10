@@ -1,5 +1,6 @@
-package com.gowri.ApiGateway;
+package com.gowri.ApiGateway.exception;
 
+import com.gowri.ApiGateway.exception.ApiGatewayError;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

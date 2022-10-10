@@ -1,8 +1,8 @@
 package com.gowri.ApiGateway.handler.impl;
 
-import com.gowri.ApiGateway.ApiGatewayExceptionFactory;
-import com.gowri.ApiGateway.CommonResponse;
-import com.gowri.ApiGateway.RoutingService;
+import com.gowri.ApiGateway.exception.ApiGatewayExceptionFactory;
+import com.gowri.ApiGateway.domain.CommonResponse;
+import com.gowri.ApiGateway.service.RoutingService;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.gowri.ApiGateway;
+package com.gowri.ApiGateway.util;
 
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.env.PropertiesPropertySource;
