@@ -1,7 +1,7 @@
 package com.gowri.ApiGateway.handler;
 
-import com.gowri.ApiGateway.domain.CommonResponse;
 import com.gowri.ApiGateway.handler.impl.AuthenticationHandler;
+import com.gowri.ApiGateway.handler.impl.RequestLoggingHandler;
 import com.gowri.ApiGateway.handler.impl.RoutingHandlerImpl;
 import org.springframework.stereotype.Component;
 
@@ -11,13 +11,17 @@ public class HandlerFactory {
     private final AuthenticationHandler authenticationHandler;
     private final RoutingHandlerImpl routingHandler;
 
-    public HandlerFactory(AuthenticationHandler authenticationHandler, RoutingHandlerImpl routingHandler) {
+    private final RequestLoggingHandler loggingHandler;
+
+    public HandlerFactory(AuthenticationHandler authenticationHandler, RoutingHandlerImpl routingHandler, RequestLoggingHandler loggingHandler) {
         this.authenticationHandler = authenticationHandler;
         this.routingHandler = routingHandler;
+        this.loggingHandler = loggingHandler;
     }
 
     public Handler createHandlers() {
         authenticationHandler.setHandler(routingHandler);
-        return authenticationHandler;
+        loggingHandler.setHandler(authenticationHandler);
+        return loggingHandler;
     }
 }
