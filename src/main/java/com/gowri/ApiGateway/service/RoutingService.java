@@ -3,6 +3,7 @@ package com.gowri.ApiGateway.service;
 import com.gowri.ApiGateway.client.RoutingGatewayClient;
 import com.gowri.ApiGateway.config.RoutingConfigs;
 import com.gowri.ApiGateway.domain.IncomingRequest;
+import com.gowri.ApiGateway.exception.ApiGatewayExceptionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -31,7 +32,7 @@ public class RoutingService {
     public ResponseEntity<Object> forward(HttpServletRequest request) throws IOException {
         IncomingRequest incomingRequest = convert(request);
         String serviceForwardUrl = findServiceForwardUrl(incomingRequest.getUrl())
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> ApiGatewayExceptionFactory.genericError("Routing config error"));
         return routingGatewayClient.send(serviceForwardUrl, incomingRequest);
     }
 
