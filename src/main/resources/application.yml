@@ -16,3 +16,8 @@ routing:
       timeoutInSeconds: 20
     read:
       timeoutInSeconds: 50
+
+authentication:
+  exemption:
+    patterns:
+      - .*/v1/login.*

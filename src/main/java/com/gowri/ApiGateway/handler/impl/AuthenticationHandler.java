@@ -3,6 +3,7 @@ package com.gowri.ApiGateway.handler.impl;
 import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.MissingClaimException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.gowri.ApiGateway.AuthenticationConfig;
 import com.gowri.ApiGateway.exception.ApiGatewayExceptionFactory;
 import com.gowri.ApiGateway.domain.CommonResponse;
 import com.gowri.ApiGateway.util.JwtTokenUtil;
@@ -12,19 +13,38 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.regex.Pattern;
 
 @Component
 @Slf4j
 public class AuthenticationHandler extends BaseHandler {
-    JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final AuthenticationConfig authenticationConfig;
 
-    public AuthenticationHandler(JwtTokenUtil jwtTokenUtil) {
+    public AuthenticationHandler(JwtTokenUtil jwtTokenUtil,
+                                 AuthenticationConfig authenticationConfig) {
         this.jwtTokenUtil = jwtTokenUtil;
+        this.authenticationConfig = authenticationConfig;
+    }
+
+    public boolean isHandlingNeeded(HttpServletRequest request) {
+        List<Pattern> exemptionList = authenticationConfig.getExemptionList();
+        return exemptionList
+                .stream()
+                .noneMatch(pattern -> pattern.matcher(request.getRequestURI()).matches());
     }
 
     @Override
     public void handle(HttpServletRequest request, CommonResponse response) {
         Enumeration<String> authorizationHeaders = request.getHeaders(HttpHeaders.AUTHORIZATION);
+        if(isHandlingNeeded(request)) {
+            authenticate(authorizationHeaders);
+        }
+        handleNext(request, response);
+    }
+
+    private void authenticate(Enumeration<String> authorizationHeaders) {
         if (authorizationHeaders != null && authorizationHeaders.hasMoreElements() ) {
             String token = authorizationHeaders.nextElement();
             try {
@@ -40,6 +60,5 @@ public class AuthenticationHandler extends BaseHandler {
         } else {
             throw ApiGatewayExceptionFactory.AUTHENTICATION_TOKEN_NOT_FOUND;
         }
-        handleNext(request, response);
     }
 }

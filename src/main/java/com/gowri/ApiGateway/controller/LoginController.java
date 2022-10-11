@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
-    @Autowired
-    private JwtTokenUtil keyUtil;
-
-    @GetMapping("/login")
-    public String login() {
-        return keyUtil.generateToken().orElseThrow(IllegalArgumentException::new);
-    }
+//    @Autowired
+//    private JwtTokenUtil keyUtil;
+//
+//    @GetMapping("/login")
+//    public String login() {
+//        return keyUtil.generateToken().orElseThrow(IllegalArgumentException::new);
+//    }
 }

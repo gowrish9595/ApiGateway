@@ -22,7 +22,7 @@ public class CommonController {
         this.apiGatewayService = apiGatewayService;
     }
 
-    @RequestMapping("/v1/**")
+    @RequestMapping("**")
     public ResponseEntity<Object> get(HttpServletRequest request)  {
         return apiGatewayService.handle(request);
     }
